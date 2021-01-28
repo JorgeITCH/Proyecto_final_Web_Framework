@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} Resultados {{ question.id }}{% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="header">
+            <span class="logo">Resultados:</span>
+        </div>
+        <div id="content">
+            <ul>
+                {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }} -- {{ choice.votes }} voto{{ choice.votes|pluralize }} -- Votantes: {% for choiceusernames in choice.choiceusernames_set.all %} {{ choiceusernames.usernamed }} {% endfor %}</li>
+                {% endfor %}
+            </ul>
+            
+            <a href="{% url 'polls:index' %}">Volver a las encuestas</a>
+        </div>
+        
+    </body>
+</html>

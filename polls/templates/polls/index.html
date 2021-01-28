@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} Encuestas {% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet"> 
+    </head>
+    <body>
+        <div id="header">
+            <span class="logo"> Bienvenido, {{ user.get_username }}.</span>
+        </div>
+        <div id="content">
+            <h1>Encuestas disponibles: </h1>
+            {% if latest_question_list %}
+            <ul>
+                {% for question in latest_question_list %}
+                <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No polls are available.</p>
+            {% endif %}
+            <a href="{% url 'account:login' %}">Volver al inicio de sesion</a>
+        </div>
+    </body>
+</html>
+
+
