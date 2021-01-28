@@ -101,9 +101,8 @@ label {
     margin-bottom:4px;
 }
 input.radio {
-    float: left;
-    clear: none;
-    margin: 2px 0 0 2px;
+    clear: both;
+    margin: 0 0 -30px 30px;
 }
 input, textarea {
     clear:both;
@@ -208,6 +207,9 @@ ul.messages li a.close {
 .image-info div {
     padding:20px 0;
     overflow:auto;
+}
+div.choice {
+    display: inline;
 }
 .count {
     color:#aaa;
