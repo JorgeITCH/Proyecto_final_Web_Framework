@@ -19,6 +19,17 @@ a:hover {
     color:#00a74f;
 }
 
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: red;
+
+    margin: 0 0 0 10px;
+}
+
 h1, h2, h3, h4, h5 , h6 { font-family: 'Muli', sans-serif; font-weight:normal; }
 
 h1 {
@@ -100,9 +111,15 @@ label {
     color:#333;
     margin-bottom:4px;
 }
+label.radio {
+    float: inherit;
+    clear: inherit;
+    color: inherit;
+    margin: 0 0 0 20px;
+}
 input.radio {
     clear: both;
-    margin: 0 0 -30px 30px;
+    margin: 0 0 -30px 0;
 }
 input, textarea {
     clear:both;
@@ -170,6 +187,11 @@ ul.messages li a.close {
     border:0;
     box-shadow:none;
     text-shadow:none;
+}
+
+li.list_questions{
+    margin: 0 0 3px 0;
+    line-height: 1.5;
 }
 
 .login-form {

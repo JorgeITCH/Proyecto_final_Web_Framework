@@ -4,9 +4,15 @@ from django.db import models
 from django.utils import timezone
 
 
-
 # Create your models here.
+class Department(models.Model):
+    department_text = models.CharField(max_length=200)
+    max_number_questions = models.IntegerField(default=0)
+    def __str__(self):
+        return self.department_text
+
 class Question(models.Model):
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     def __str__(self):
@@ -25,10 +31,4 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
 
-class ChoiceUsernames(models.Model):
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    choiced_id = models.IntegerField(default=0)
-    usernamed = models.CharField(max_length=200)
-    def __str__(self):
-        return self.usernamed
         

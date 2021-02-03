@@ -15,18 +15,26 @@
             {% if error_message %}
             <p><strong>{{ error_message }}</strong></p>
             {% endif %}
+            
+            {% if object_list %}
+            {% for question in object_list %}
             <h1>{{ question.question_text }}</h1>
-            <form action="{% url 'polls:vote' question.id %}" method="post">
+            <form action="{% url 'polls:vote' view.kwargs.department_id view.kwargs.question_id %}" method="post">
                 {% csrf_token %} 
                 {% for choice in question.choice_set.all %}
                 <div class="choice" style="display: block;">
                     <input type="radio" name="choice" class="radio" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    <label for="choice{{ forloop.counter }}" class="radio">{{ choice.choice_text }}</label>
                 </div><br>
                 {% endfor %}
                 <input type="hidden" name="username" value="{{ user.get_username }}">
                 <input type="submit" value="Vote">
+                <a></a>
             </form>
+            {% endfor %}
+            {% endif %}
+            <br><br>
+            <a href="{% url 'polls:questions' view.kwargs.department_id %}">Regresar a las encuestas</a>
         </div>  
     </body>
 </html>

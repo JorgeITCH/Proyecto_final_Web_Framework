@@ -9,16 +9,26 @@
     </head>
     <body>
         <div id="header">
-            <span class="logo">Resultados:</span>
+            {% if object_list %}
+            {% for question in object_list %}
+            <span class="logo">Resultados de {{ question.question_text }}:</span>
+            {% endfor %}
+            {% endif %}
         </div>
         <div id="content">
+            {% if object_list %}
+            {% for question in object_list %}
             <ul>
+                
                 {% for choice in question.choice_set.all %}
-                <li>{{ choice.choice_text }} -- {{ choice.votes }} voto{{ choice.votes|pluralize }} -- Votantes: {% for choiceusernames in choice.choiceusernames_set.all %} {{ choiceusernames.usernamed }} {% endfor %}</li>
+                <li>{{ choice.choice_text }} -- {{ choice.votes }} voto{{ choice.votes|pluralize }}</li>
                 {% endfor %}
+
             </ul>
             
-            <a href="{% url 'polls:index' %}">Volver a las encuestas</a>
+            <a href="{% url 'polls:questions' question.department_id %}">Volver a las encuestas</a>
+            {% endfor %}
+            {% endif %}
         </div>
         
     </body>

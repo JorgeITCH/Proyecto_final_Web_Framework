@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} Encuestas {% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet"> 
+    </head>
+    <body>
+        <div id="header">
+            <span class="logo"> Bienvenido, {{ user.get_username }}.</span>
+        </div>
+        <div id="content">
+            {% if user.is_authenticated %}
+
+            <h1>Nueva pregunta: </h1>
+            
+            {% if number_of_questions >= max_number_questions %}
+            <p>Alcanzo el numero maximo de encuestas que puede crear</p>
+            {% else %}
+            
+            {% if user.employee.department == department_text %}
+            <form action="{% url 'polls:createquestion' department_id %}" method="post">
+                {% csrf_token %}
+                <label for="question_name">Pregunta: </label>
+                <input type="text" name="question_name" id="question_name">
+                <label>Opciones que puedes poner (Se permite de 1 a 5 opciones por pregunta, no hay problema si dejas en blanco algunas opciones):</label>
+                <label for="choice1">Opcion 1: </label>
+                <input type="text" name="choice1" id="choice1">
+                <label for="choice2">Opcion 2: </label>
+                <input type="text" name="choice2" id="choice2">
+                <label for="choice3">Opcion 3: </label>
+                <input type="text" name="choice3" id="choice3">
+                <label for="choice4">Opcion 4: </label>
+                <input type="text" name="choice4" id="choice4">
+                <label for="choice5">Opcion 5: </label>
+                <input type="text" name="choice5" id="choice5">
+                <br><br>
+                <input type="submit" value="Crear">
+            </form>
+
+            <a href="{% url 'polls:questions' department_id %}">Volver a las encuestas</a>
+            {% else %}
+            <p>Usted no es del area de {{department_text}}, no tiene acceso a crear encuestas aqui.</p>
+
+            <a href="{% url 'polls:questions' department_id %}">Volver a las encuestas</a>
+            {% endif %}
+
+            {% endif %}
+
+            {% else %}
+            <p>No tiene permiso de entrar aqui, porfavor regrese</p>
+
+            <a href="{% url 'account:login' %}">Volver al inicio de sesion</a>
+            {% endif %}
+            
+        </div>
+    </body>
+</html>

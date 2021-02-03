@@ -1,0 +1,74 @@
+{% load static %}
+{% load department_information %}
+{% departments as departamentos %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} Encuestas {% endblock %}</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet"> 
+    </head>
+    <body>
+        <div id="header">
+            <span class="logo"> Encuestas disponibles en {% for department in departamentos %} {% if department.id == view.kwargs.department %} {{ department.department_text }} {% endif %} {% endfor %}</span>
+        </div>
+        <div id="content">
+            <h1>Encuestas disponibles: </h1>
+            
+            {% if object_list %}
+            <ul>
+                {% for question in object_list %}
+                <li class="list_questions">
+                    <a href="{% url 'polls:detail' view.kwargs.department_id question.id %}">{{ question.question_text }}</a>
+                    {% if user.is_authenticated %}
+
+                    {% for department in departamentos %} 
+
+                    {% if department.id == view.kwargs.department_id %}
+
+                    {% if department.department_text == user.employee.department %} 
+                    <a href="{% url 'polls:deletequestion' view.kwargs.department_id question.id %}" class="button">Eliminar</a>
+                    {% endif %}
+                    
+                    {% endif %}
+
+                    {% endfor %}
+                    
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No hay encuestas disponibles para este departamento</p>
+            {% endif %}
+            
+            
+            <p></p>
+
+            {% if user.is_authenticated %}
+
+            {% for department in departamentos %}
+
+            {% if department.id == view.kwargs.department_id %}
+
+            {% if department.department_text == user.employee.department %} 
+            <h1>Crear nueva encuesta</h1>
+            <a href="{% url 'polls:newquestion' view.kwargs.department_id %}">Crear la encuesta</a>
+            {% endif %}
+            
+            {% endif %}
+
+            {% endfor %}
+
+            <br><br><br><br>
+            <a href="{% url 'account:logout' %}">Cerrar sesion</a>
+
+            {% endif %}
+
+            <br><br><br><br>
+            <a href="{% url 'polls:index' %}">Volver al inicio</a>
+            
+        </div>
+    </body>
+</html>
